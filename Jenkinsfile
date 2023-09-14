@@ -18,8 +18,10 @@ pipeline {
             steps {
                  withSonarQubeEnv('sonar-9.9') {
                  sh 'mvn sonar:sonar'
+                 }
             }
         }
+        
         stage('Build docker image') {
             steps {  
                 sh 'docker build -t harimarolix/nodeapp:$BUILD_NUMBER .'
