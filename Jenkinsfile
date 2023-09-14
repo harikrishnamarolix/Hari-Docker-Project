@@ -21,7 +21,7 @@ pipeline {
         }
          stage('Run Container') {
             steps {  
-                sh 'docker run -itd --name cont2 -p 8086:80 harimarolix/nodeapp:2'
+                sh 'docker run -itd --name cont2 -p 8086:80 harimarolix/nodeapp:5'
             }
         }
         
