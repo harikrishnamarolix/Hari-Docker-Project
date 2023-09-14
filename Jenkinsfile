@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials ('dockerhub_id')
+        DOCKERHUB_CREDENTIALS = credentials ('dockerhub')
     }
     stages {
         stage('Git Clone') {
@@ -14,22 +14,14 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-         stage('CodeQuality') {
-            steps {
-                 withSonarQubeEnv('sonar-9.9') {
-                 sh 'mvn sonar:sonar'
-                 }
-            }
-        }
-        
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t harimarolix/nodeapp:$BUILD_NUMBER .'
+                sh 'docker build -t rayenki/nodeapp:$BUILD_NUMBER .'
             }
         }
          stage('Run Container') {
             steps {  
-                sh 'docker run -itd --name cont4 -p 8087:80 harimarolix/nodeapp:5'
+                sh 'docker run -itd --name cont01 -p 8081:80 harimarolix/nodeapp:5'
             }
         }
         
@@ -40,7 +32,7 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push harimarolix/nodeapp:$BUILD_NUMBER'
+                sh 'docker push rayenki/nodeapp:$BUILD_NUMBER'
             }
         }
     }
